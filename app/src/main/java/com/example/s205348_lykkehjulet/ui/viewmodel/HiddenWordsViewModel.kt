@@ -1,7 +1,6 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
 import com.example.s205348_lykkehjulet.data.model.HiddenWords
-import com.example.s205348_lykkehjulet.ui.view.LetterBox
 
 class HiddenWordsViewModel {
 
@@ -16,16 +15,10 @@ class HiddenWordsViewModel {
 
         for (i in 27..37)
             availableBoxes.add(i)
-        println("lenght of availableBoxes: ${availableBoxes.size}")
     }
 
-    //TODO 2d array af nummer og bogstav OBS: Bør åbenbart være recyclerview?
-    /*fun wordTo2DArray() {
-        val word = getRandomWord()
-        if (word!=null) {
-            println("random number: $word")
-        }
-    }*/
+    //TODO OBS: Bør åbenbart være recyclerview?
+
 
     fun getRandomWord(): String {
         if (!usedWords.size.equals(hiddenWords.size)) {
@@ -64,5 +57,9 @@ class HiddenWordsViewModel {
             i++
         }
         return hiddenWordArray
+    }
+
+    fun drawBoxes(){
+
     }
 }

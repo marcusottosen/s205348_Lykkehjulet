@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.s205348_lykkehjulet.R
@@ -21,9 +20,7 @@ import com.example.s205348_lykkehjulet.R
 
 @ExperimentalFoundationApi
 @Composable
-fun LetterBox(boxValue: CharArray) { //2D array med $it og tilsvarende bogstav: foundLetters:Array<Array<Int>>,
-
-    var found = intArrayOf(5, 6, 7)
+fun LetterBox(boxValue: CharArray, lettersFound: IntArray) {
 
     //Default values
     val edges = intArrayOf(0, 12, 39, 51)
@@ -37,38 +34,45 @@ fun LetterBox(boxValue: CharArray) { //2D array med $it og tilsvarende bogstav: 
     ) {
         items(boxValue.toList()) { //For all items in array
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                print("num $i = ")
-                println(boxValue[i])
                 if (edges.contains(i)) { //Corners //alpha 0.0f
                     boxColor = colorResource(R.color.cornersAndBg)
 
-                } else if (boxValue[i]=='\u0000') { //if box does not contain a letter (blue) !found.contains(i)
+                } else if (boxValue[i]=='\u0000') { //if box does not contain a letter
                     boxColor = colorResource(R.color.noLetter)
+                } else if (lettersFound.contains(i)){
+                    boxColor = colorResource(R.color.found)
                 } else { //contains a letter
                     boxColor = colorResource(R.color.notFound)
-                }//Add FOUND
+                }//TODO Add FOUND
 
                 Box(
                     modifier = Modifier
                         .height(50.dp)
                         .padding(1.dp)
-                        .border(
-                            width = 1.dp,
-                            color = Color(2)
-                        )
+
                         .background(boxColor)
                         .align(Alignment.CenterHorizontally)
                 ) {
-                    Text(
-                        text = "$it",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(top = 10.dp),
-                        textAlign = TextAlign.Center
-                    )
+                    if (lettersFound.contains(i)) {
+                        Text(
+                            text = "$it",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(top = 10.dp),
+                            textAlign = TextAlign.Center
+                        )
+                    } else {
+                        Text(
+                            text = "",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(top = 10.dp)
+                        )
+                    }
                 }
             }
             i++

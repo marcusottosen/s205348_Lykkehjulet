@@ -1,10 +1,8 @@
 package com.example.s205348_lykkehjulet
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -13,15 +11,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import com.example.s205348_lykkehjulet.ui.theme.S205348_LykkehjuletTheme
-import com.example.s205348_lykkehjulet.ui.view.defaultButton
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.s205348_lykkehjulet.ui.view.LetterBox
-import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
+import com.example.s205348_lykkehjulet.ui.viewmodel.GameController
 
 //import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
@@ -33,7 +27,7 @@ class MainActivity : ComponentActivity() {
             S205348_LykkehjuletTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    DefaultPreview()
+                    runGame()
                 }
             }
         }
@@ -41,7 +35,19 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@ExperimentalFoundationApi
+@Preview(showBackground = true, widthDp = 500, heightDp = 1000)
+@Composable
+fun runGame() {
+    S205348_LykkehjuletTheme {
+        //defaultButton(text = "ehh", checked = false, onClick = { Unit })
+        val gameController = GameController()
+        gameController.GameController()
 
+    }
+}
+
+/*
 @Composable
 fun MyButton() {
     Column(
@@ -59,7 +65,7 @@ fun MyButton() {
 
         // below line is use to create a button.
         Button(
-            onClick = { },
+            onClick = {onClick},
             contentPadding = PaddingValues(
                 start = 20.dp,
                 top = 12.dp,
@@ -71,19 +77,4 @@ fun MyButton() {
             Text(text = "click on me!", color = Color.White)
         }
     }
-}
-
-
-@ExperimentalFoundationApi
-@Preview(showBackground = true, widthDp = 500, heightDp = 1000)
-@Composable
-fun DefaultPreview() {
-    S205348_LykkehjuletTheme {
-        //defaultButton(text = "ehh", checked = false, onClick = { Unit })
-        MyButton()
-        val hiddenWord  = HiddenWordsViewModel()
-        hiddenWord.createAvailableBoxesArray()
-        LetterBox(boxValue = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()))
-
-    }
-}
+}*/
