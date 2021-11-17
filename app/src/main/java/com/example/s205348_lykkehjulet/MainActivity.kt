@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.s205348_lykkehjulet.ui.view.LetterBox
+import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
+
 //import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
 class MainActivity : ComponentActivity() {
@@ -38,14 +40,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+
 
 @Composable
 fun MyButton() {
-
     Column(
         // we are using column to align our
         // imageview to center of the screen.
@@ -61,7 +59,7 @@ fun MyButton() {
 
         // below line is use to create a button.
         Button(
-            onClick = { /* ... */ },
+            onClick = { },
             contentPadding = PaddingValues(
                 start = 20.dp,
                 top = 12.dp,
@@ -75,6 +73,7 @@ fun MyButton() {
     }
 }
 
+
 @ExperimentalFoundationApi
 @Preview(showBackground = true, widthDp = 500, heightDp = 1000)
 @Composable
@@ -82,11 +81,9 @@ fun DefaultPreview() {
     S205348_LykkehjuletTheme {
         //defaultButton(text = "ehh", checked = false, onClick = { Unit })
         MyButton()
-        LetterBox()
-        //val hiddenWord  = HiddenWordsViewModel()
-        //hiddenWord.createAvailableBoxesArray()
-
-        //repeat(10){hiddenWord.wordTo2DArray()}
+        val hiddenWord  = HiddenWordsViewModel()
+        hiddenWord.createAvailableBoxesArray()
+        LetterBox(boxValue = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()))
 
     }
 }

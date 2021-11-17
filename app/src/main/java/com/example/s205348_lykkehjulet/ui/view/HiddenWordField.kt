@@ -10,44 +10,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.s205348_lykkehjulet.R
+
 
 @ExperimentalFoundationApi
 @Composable
-fun LetterBox() { //2D array med $it og tilsvarende bogstav: foundLetters:Array<Array<Int>>,
+fun LetterBox(boxValue: CharArray) { //2D array med $it og tilsvarende bogstav: foundLetters:Array<Array<Int>>,
 
-    val found = intArrayOf(5, 6, 7)
+    var found = intArrayOf(5, 6, 7)
+
+    //Default values
     val edges = intArrayOf(0, 12, 39, 51)
-    val numbers = (0..51).toList()
-
-    val bgColor = intArrayOf(0, 0, 0, 0)
+    var boxColor = colorResource(R.color.cornersAndBg)
+    var i: Int = 0
 
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(13),
-        modifier = Modifier.padding(top = 20.dp)
+        modifier = Modifier.padding(10.dp, 20.dp, 10.dp,0.dp)
     ) {
-        items(numbers) {
+        items(boxValue.toList()) { //For all items in array
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (edges.contains(it)) {
-                    bgColor[0] = 0                                  //Bør være i theme>color?
-                    bgColor[1] = 0
-                    bgColor[2] = 0
-                    bgColor[3] = 0
-                } else if (!found.contains(it)) {
-                    bgColor[0] = 52
-                    bgColor[1] = 152
-                    bgColor[2] = 219
-                    bgColor[3] = 255
-                } else {
-                    bgColor[0] = 231
-                    bgColor[1] = 76
-                    bgColor[2] = 60
-                    bgColor[3] = 255
-                }
+                print("num $i = ")
+                println(boxValue[i])
+                if (edges.contains(i)) { //Corners //alpha 0.0f
+                    boxColor = colorResource(R.color.cornersAndBg)
+
+                } else if (boxValue[i]=='\u0000') { //if box does not contain a letter (blue) !found.contains(i)
+                    boxColor = colorResource(R.color.noLetter)
+                } else { //contains a letter
+                    boxColor = colorResource(R.color.notFound)
+                }//Add FOUND
 
                 Box(
                     modifier = Modifier
@@ -55,14 +54,14 @@ fun LetterBox() { //2D array med $it og tilsvarende bogstav: foundLetters:Array<
                         .padding(1.dp)
                         .border(
                             width = 1.dp,
-                            color = Color(bgColor[0], bgColor[1], bgColor[2], bgColor[3])
+                            color = Color(2)
                         )
-                        .background(Color(bgColor[0], bgColor[1], bgColor[2], bgColor[3]))
+                        .background(boxColor)
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Text(
                         text = "$it",
-                        fontSize = 20.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -72,6 +71,7 @@ fun LetterBox() { //2D array med $it og tilsvarende bogstav: foundLetters:Array<
                     )
                 }
             }
+            i++
         }
     }
 }
