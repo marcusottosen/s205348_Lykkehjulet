@@ -3,6 +3,7 @@ package com.example.s205348_lykkehjulet
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -15,6 +16,8 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.s205348_lykkehjulet.ui.viewmodel.GameController
 
 //import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
@@ -47,34 +50,38 @@ fun runGame() {
     }
 }
 
-/*
-@Composable
-fun MyButton() {
-    Column(
-        // we are using column to align our
-        // imageview to center of the screen.
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        // below line is use to get
-        // the context for our app.
-        //val context = ContextAmbient.current
 
-        // below line is use to create a button.
-        Button(
-            onClick = {onClick},
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                top = 12.dp,
-                end = 20.dp,
-                bottom = 12.dp
-            )
-        )
-        {
-            Text(text = "click on me!", color = Color.White)
-        }
+/*
+class MainActivity : AppCompatActivity() {
+    private val itemsList = ArrayList<String>()
+    private lateinit var customAdapter: CustomAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        title = "RecyclerView - www.tutorialkart.com"
+
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+        customAdapter = CustomAdapter(itemsList)
+        val layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = customAdapter
+        prepareItems()
+    }
+    private fun prepareItems() {
+        itemsList.add("Item 1")
+        itemsList.add("Item 2")
+        itemsList.add("Item 3")
+        itemsList.add("Item 4")
+        itemsList.add("Item 5")
+        itemsList.add("Item 6")
+        itemsList.add("Item 7")
+        itemsList.add("Item 8")
+        itemsList.add("Item 9")
+        itemsList.add("Item 10")
+        itemsList.add("Item 11")
+        itemsList.add("Item 12")
+        itemsList.add("Item 13")
+        customAdapter.notifyDataSetChanged()
     }
 }*/

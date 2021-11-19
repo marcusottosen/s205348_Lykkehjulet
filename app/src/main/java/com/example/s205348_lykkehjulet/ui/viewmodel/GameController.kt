@@ -1,5 +1,9 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.recyclerview.widget.RecyclerView
 import com.example.s205348_lykkehjulet.ui.view.LetterBox
-import com.example.s205348_lykkehjulet.ui.view.defaultButton
+import com.example.s205348_lykkehjulet.ui.view.DefaultButton
+import java.util.concurrent.TimeUnit
 
 class GameController {
     val hiddenWord  = HiddenWordsViewModel()
@@ -19,27 +25,32 @@ class GameController {
     @ExperimentalFoundationApi
     @Composable
     fun GameController(){
-        RunWordGuessing()
+        //RunWordGuessing()
         GetButton()
     }
 
 
     @ExperimentalFoundationApi
     @Composable
-    fun RunWordGuessing(){
+    fun RunWordGuessing() {
         hiddenWord.createAvailableBoxesArray()
 
-        var lettersFound = intArrayOf(14,15,18)
+        var lettersFound = intArrayOf(14, 15, 18) //TODO make right
+
+
         LetterBox(
-            boxValue = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()),
-            lettersFound
+            boxValues = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()),
+            lettersFound = lettersFound
         )
     }
+
+
 
     @ExperimentalFoundationApi
     @Composable
     fun GetButton(){
-        val getNewWord = remember { mutableStateOf(true)}
+        val getNewWord = remember { mutableStateOf(false)}
+        println("getButton")
 
         Column(
             // we are using column to align our
@@ -50,15 +61,16 @@ class GameController {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            defaultButton(text = "Find new word", checked = true, onClick = { getNewWord.value = true })
+            DefaultButton(text = "Find new word",
+                onClick = { getNewWord.value = true })
         }
 
         if (getNewWord.value){
-            println("NEW WORD FOUND")
+            println("NEW WORD FOUND1")
             RunWordGuessing()
-            getNewWord.value=false
-            println("NEW WORD FOUND")
-        }
+            getNewWord.value=true
+            println("NEW WORD FOUND2")
+        } else
+            println("nope")
     }
 }
-//TODO Få defaultButton til at returnere en value somehow

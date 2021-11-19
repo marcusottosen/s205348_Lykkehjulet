@@ -1,6 +1,9 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.runtime.Composable
 import com.example.s205348_lykkehjulet.data.model.HiddenWords
+import com.example.s205348_lykkehjulet.ui.view.LetterBox
 
 class HiddenWordsViewModel {
 
@@ -34,7 +37,6 @@ class HiddenWordsViewModel {
             //LetterBox(makeFullWordArray(hiddenWords[wordNum].toString()))
 
             usedWords.add(wordNum)
-            println("$wordNum added!")
             println(hiddenWords[wordNum].toString())
             return hiddenWords[wordNum].toString()
         } else {
@@ -44,18 +46,20 @@ class HiddenWordsViewModel {
     }
 
     /**
-     * Creates an array with the lenght of all boxes and inserts the letters of the words into the correct boxes
+     * Creates an array with the lenght of all boxes and inserts the letters of the words into the correct index
+     * Each index is a box
      */
     fun makeFullWordArray(word:String): CharArray{
         var hiddenWordArray = CharArray(51)
         var i: Int = 0
-        println("word:: $word")
 
         for (letter in word) {
                 print(letter)
                 hiddenWordArray[availableBoxes[i]]=letter
             i++
         }
+        println("")
+
         return hiddenWordArray
     }
 
