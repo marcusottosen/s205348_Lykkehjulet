@@ -38,10 +38,10 @@ class GameController {
         var lettersFound = intArrayOf(14, 15, 18) //TODO make right
 
 
-        LetterBox(
-            boxValues = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()),
-            lettersFound = lettersFound
-        )
+      //  LetterBox(
+      //      boxValues = hiddenWord.makeFullWordArray(hiddenWord.getRandomWord()),
+      //      lettersFound = lettersFound
+      //  )
     }
 
 

@@ -5,11 +5,18 @@ import androidx.compose.runtime.Composable
 import com.example.s205348_lykkehjulet.data.model.HiddenWords
 import com.example.s205348_lykkehjulet.ui.view.LetterBox
 
+
 class HiddenWordsViewModel {
 
     private val usedWords: MutableList<Int> = ArrayList()
     private val hiddenWords = HiddenWords.values()
+    var hiddenWordArray = CharArray(51)
+
+    var LettersFound: MutableList<Int> = ArrayList()
+    var LettersUsed: MutableList<Char> = ArrayList()
+
     private val availableBoxes: MutableList<Int> = ArrayList()
+
 
 
     fun createAvailableBoxesArray() {
@@ -19,9 +26,6 @@ class HiddenWordsViewModel {
         for (i in 27..37)
             availableBoxes.add(i)
     }
-
-    //TODO OBS: Bør åbenbart være recyclerview?
-
 
     fun getRandomWord(): String {
         if (!usedWords.size.equals(hiddenWords.size)) {
@@ -50,20 +54,54 @@ class HiddenWordsViewModel {
      * Each index is a box
      */
     fun makeFullWordArray(word:String): CharArray{
-        var hiddenWordArray = CharArray(51)
-        var i: Int = 0
+        var i = 0
 
         for (letter in word) {
                 print(letter)
                 hiddenWordArray[availableBoxes[i]]=letter
             i++
         }
-        println("")
-
         return hiddenWordArray
     }
 
+    @ExperimentalFoundationApi
+    @Composable
     fun drawBoxes(){
+        createAvailableBoxesArray()
+        LetterBox(
+            boxValues = makeFullWordArray(getRandomWord()),
+            lettersFound = LettersFound
+        )
+    }
 
+    /**
+     * Checks if the chosen letter is in the hidden word
+     */
+    fun letterChosen(letter: Char) {
+        LettersUsed.add(letter)
+        if (hiddenWordArray.contains(letter)) {
+            for (i in 1..hiddenWordArray.size) {
+                if (hiddenWordArray[i-1] != '\u0000' && hiddenWordArray[i-1] ==letter) {
+                    println("FUCK YEAH $letter HAS BEEN IDENTIFIED")
+                    println("$letter is at index $i")
+                    LettersFound.add(i-1)
+                }
+            }
+        } else {
+            // Letter not found in word
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

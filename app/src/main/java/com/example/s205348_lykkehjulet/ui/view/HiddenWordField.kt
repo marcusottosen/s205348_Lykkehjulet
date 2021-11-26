@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 
 @ExperimentalFoundationApi
 @Composable
-fun LetterBox(boxValues: CharArray, lettersFound: IntArray){
+fun LetterBox(boxValues: CharArray, lettersFound: MutableList<Int>){
 
     //Default values
     val edges = intArrayOf(0, 12, 39, 51)
