@@ -27,18 +27,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Navigation()
-           //S205348_LykkehjuletTheme {
-           //    // A surface container using the 'background' color from the theme
-           //    Surface(color = MaterialTheme.colors.background) {
-           //        runGame()
-           //    }
-           //}
+           S205348_LykkehjuletTheme {
+               // A surface container using the 'background' color from the theme
+               Surface(color = MaterialTheme.colors.background) {
+                   Navigation()
+
+               }
+           }
         }
     }
 }
 
-
+/*
 @ExperimentalFoundationApi
 @Preview(showBackground = true, widthDp = 500, heightDp = 1000)
 @Composable
@@ -52,7 +52,7 @@ fun runGame() {
 }
 
 
-/*
+
 class MainActivity : AppCompatActivity() {
     private val itemsList = ArrayList<String>()
     private lateinit var customAdapter: CustomAdapter

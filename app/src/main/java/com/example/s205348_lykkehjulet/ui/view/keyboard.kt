@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.s205348_lykkehjulet.R
 
+//TODO: Få knapperne til at virke. Knappens char skal sendes til gameFragment somehow
+
 @ExperimentalFoundationApi
 @Composable
 fun Keyboard() {
