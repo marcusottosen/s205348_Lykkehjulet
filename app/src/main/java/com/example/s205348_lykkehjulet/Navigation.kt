@@ -20,7 +20,9 @@ fun Navigation(){
         composable(
             route = Screen.GameScreen.route
         ){
-            gameFragment()
+
+            val gameFragment = gameFragment()
+            gameFragment.runGameFragment()
         }
     }
 }

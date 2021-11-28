@@ -15,12 +15,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.s205348_lykkehjulet.R
+import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 import java.util.concurrent.TimeUnit
 
 
 @ExperimentalFoundationApi
-@Composable
-fun LetterBox(boxValues: CharArray, lettersFound: MutableList<Int>){
+@Composable //onLettersFoundChange: (Char) -> Unit
+fun LetterBox(boxValues: CharArray, lettersFound: MutableList<Int>){ //boxValues: CharArray, lettersFound: MutableList<Int>
 
     //Default values
     val edges = intArrayOf(0, 12, 39, 51)
@@ -29,6 +30,7 @@ fun LetterBox(boxValues: CharArray, lettersFound: MutableList<Int>){
 
     Card(elevation = 10.dp) {
         LazyVerticalGrid(
+            state = rememberLazyListState(),
             cells = GridCells.Fixed(13),
             modifier = Modifier.padding(10.dp, 20.dp, 10.dp, 20.dp)
         ) {
@@ -43,7 +45,7 @@ fun LetterBox(boxValues: CharArray, lettersFound: MutableList<Int>){
                         boxColor = colorResource(R.color.found)
                     } else { //contains a letter
                         boxColor = colorResource(R.color.notFound)
-                    }//TODO Add FOUND
+                    }
 
                     Box(
                         modifier = Modifier

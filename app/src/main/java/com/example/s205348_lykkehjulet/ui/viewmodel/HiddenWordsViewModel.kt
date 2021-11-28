@@ -1,7 +1,8 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import com.example.s205348_lykkehjulet.data.model.HiddenWords
 import com.example.s205348_lykkehjulet.ui.view.LetterBox
 
@@ -12,8 +13,11 @@ class HiddenWordsViewModel {
     private val hiddenWords = HiddenWords.values()
     var hiddenWordArray = CharArray(51)
 
+
     var LettersFound: MutableList<Int> = ArrayList()
     var LettersUsed: MutableList<Char> = ArrayList()
+
+    var LetterTest by mutableStateOf(LettersFound)
 
     private val availableBoxes: MutableList<Int> = ArrayList()
 
@@ -66,11 +70,15 @@ class HiddenWordsViewModel {
 
     @ExperimentalFoundationApi
     @Composable
-    fun drawBoxes(){
+    fun DrawBoxes(){
         createAvailableBoxesArray()
+        val LetterTestt = remember{ mutableStateOf(LettersFound)}
+
+        LetterTest = LettersFound
         LetterBox(
             boxValues = makeFullWordArray(getRandomWord()),
             lettersFound = LettersFound
+            //onLettersFoundChange = {LettersFound = it}
         )
     }
 
@@ -82,13 +90,13 @@ class HiddenWordsViewModel {
         if (hiddenWordArray.contains(letter)) {
             for (i in 1..hiddenWordArray.size) {
                 if (hiddenWordArray[i-1] != '\u0000' && hiddenWordArray[i-1] ==letter) {
-                    println("FUCK YEAH $letter HAS BEEN IDENTIFIED")
-                    println("$letter is at index $i")
+                    println("$letter is in the hidden word at $i!!")
                     LettersFound.add(i-1)
                 }
             }
         } else {
             // Letter not found in word
+            // life -1
         }
     }
 }

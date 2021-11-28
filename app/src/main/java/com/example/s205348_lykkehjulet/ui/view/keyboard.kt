@@ -32,7 +32,7 @@ fun Keyboard() {
         items(getAlphabet().toList()) { //For all items in array
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { println("$it") },
                     modifier = Modifier.height(50.dp)
                         .padding(1.dp)
                         .background(colorResource(R.color.noLetter))
