@@ -21,16 +21,16 @@ import com.example.s205348_lykkehjulet.R
 import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
 
-open class gameFragment {
+ class gameFragment {
 
-    val viewModel = HiddenWordsViewModel()
 
     @ExperimentalFoundationApi
     //@Preview(showBackground = true)
     @Composable
     fun runGameFragment() {
+        val viewModel = HiddenWordsViewModel()
 
-
+        println("RUNGAMEFRAGMENT HAS BEEN RUN")
         Column(modifier = Modifier.fillMaxWidth()) {
 
             viewModel.DrawBoxes()
@@ -122,7 +122,7 @@ open class gameFragment {
         return alphabet
     }
 
-    fun letterClicked(letter: Char){
-        viewModel.letterChosen(letter)
-    }
+   // fun letterClicked(letter: Char){
+   //     viewModel.letterChosen(letter)
+   // }
 }

@@ -12,6 +12,8 @@ import com.example.s205348_lykkehjulet.ui.view.getStartScreen
 @ExperimentalFoundationApi
 @Composable
 fun Navigation(){
+    val gameFragment = gameFragment()
+
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.StartScreen.route){
         composable(route = Screen.StartScreen.route){
@@ -20,9 +22,8 @@ fun Navigation(){
         composable(
             route = Screen.GameScreen.route
         ){
-
-            val gameFragment = gameFragment()
             gameFragment.runGameFragment()
+            println("GAMEFRAGMENT HAS BEEN RUN")
         }
     }
 }
