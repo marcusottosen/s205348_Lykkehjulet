@@ -77,13 +77,14 @@ class HiddenWordsViewModel {
         LetterTest = LettersFound
         LetterBox(
             boxValues = makeFullWordArray(getRandomWord()),
-            lettersFound = LettersFound
+            lettersFound = LetterTestt
+            //onLettersFoundChange = {LettersFound = it}
             //onLettersFoundChange = {LettersFound = it}
         )
     }
 
     /**
-     * Checks if the chosen letter is in the hidden word
+     * Checks if the chosen letter is in the hidden word and adds to the LettersFound list
      */
     fun letterChosen(letter: Char) {
         LettersUsed.add(letter)
