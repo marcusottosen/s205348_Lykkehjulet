@@ -1,7 +1,10 @@
 package com.example.s205348_lykkehjulet.data.model
 
 
-public enum class HiddenWords{
-    MONOPOLIST, IDENTIFIKATIONSKORT, NATIONALISERE, OPBLOMSTRE, SOCIALHJÆLPER, KENDINGSSIGNAL, KANALISERING, AFBANKNING, UNDERVISNINGSASSISTENT
+public enum class HiddenWords(val phrase: String){
+    BOOKSTORE("ABCKDOGFU"),
+    sBOOKSTORE("ABCKDOGFUGD"),
+    BdOOKSTORE("ABCKDOGFUAA"),
+    BOgOKSTORE("ABCKDOGFUBB"),
     }
 

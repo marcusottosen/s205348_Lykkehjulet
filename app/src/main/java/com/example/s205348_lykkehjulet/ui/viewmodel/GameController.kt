@@ -1,9 +1,5 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.recyclerview.widget.RecyclerView
-import com.example.s205348_lykkehjulet.ui.view.LetterBox
-import com.example.s205348_lykkehjulet.ui.view.DefaultButton
-import java.util.concurrent.TimeUnit
+import com.example.s205348_lykkehjulet.ui.view.items.DefaultButton
 
 class GameController {
     val hiddenWord  = HiddenWordsViewModel()

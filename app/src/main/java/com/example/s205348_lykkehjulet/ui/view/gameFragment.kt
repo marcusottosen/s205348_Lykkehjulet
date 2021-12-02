@@ -3,126 +3,100 @@ package com.example.s205348_lykkehjulet.ui.view
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.s205348_lykkehjulet.R
+import com.example.s205348_lykkehjulet.ui.view.items.Keyboard
+import com.example.s205348_lykkehjulet.ui.view.items.LetterBox
+import com.example.s205348_lykkehjulet.ui.view.items.WheelItem
 import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
 
- class gameFragment {
+class gameFragment {
+
+    @ExperimentalFoundationApi
+    @Composable
+    fun SetupGameFragment(){
+        val viewModel = HiddenWordsViewModel()
+        viewModel.prepareBoxes()
+        GameFragment(viewModel)
+    }
+
+
+    //TODO: I photoshop lav et lykkehjul, noter græderne da disse somehow skal bruges til
+    // at finde frem til hvad den lander på
+    // Lav også en trekant (kan laves i compose)
+
+
+
+
+
 
 
     @ExperimentalFoundationApi
-    //@Preview(showBackground = true)
+    @Preview(showBackground = true)
     @Composable
-    fun runGameFragment() {
-        val viewModel = HiddenWordsViewModel()
+    fun GameFragment(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
+        val health by remember { mutableStateOf(viewModel.health) }
+        val score by remember { mutableStateOf(viewModel.score) }
 
-        println("RUNGAMEFRAGMENT HAS BEEN RUN")
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxSize()) {
 
-            viewModel.DrawBoxes()
-
+            LetterBox(viewModel)
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Health: 5",
+                    text = health.value.toString(),
                     modifier = Modifier.padding(20.dp, 10.dp, 0.dp, 0.dp),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "score: 100",
+                    text = score.value.toString(),
                     modifier = Modifier.padding(0.dp, 10.dp, 20.dp, 0.dp),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-        }
-
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(align = Alignment.BottomCenter)
-                .padding(bottom = 20.dp)
-        ) {
-            Box(
+            //Spinning wheel & its button
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentSize(align = Alignment.BottomCenter),
-                Alignment.BottomCenter
+                    .wrapContentSize(align = Alignment.Center),
+                verticalArrangement = Arrangement.Center
             ) {
+                val clicked by remember { mutableStateOf(viewModel.canSpin) }
 
-                LazyVerticalGrid(
-                    cells = GridCells.Fixed(7),
-                    modifier = Modifier.padding(10.dp, 20.dp, 10.dp, 20.dp),
-                ) {
-                    items(getAlphabet().toList()) { //For all items in array
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Button(
-                                onClick = { viewModel.letterChosen(it) },
-                                modifier = Modifier.height(50.dp)
-                                    .padding(1.dp)
-                                    .background(colorResource(R.color.noLetter))
-                                    .align(Alignment.CenterHorizontally)
-                            ) {
-                                Text(
-                                    text = "$it",
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .fillMaxHeight()
-                                        .padding(top = 10.dp),
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
+                WheelItem(viewModel)
+                Box(modifier = Modifier.align(Alignment.CenterHorizontally).padding(top=10.dp)
+                    .background(color = Color.Green)) {
+                    Button(
+                        onClick = {
+                            viewModel.wheelDirection.value = !viewModel.wheelDirection.value
+                            viewModel.canSpin.value = !viewModel.canSpin.value
+                            viewModel.canChooseLetter.value = true
+                        },
+
+                        enabled = clicked.value
+                    ) {
+                        Text(text = "Spin the wheel!")
                     }
                 }
             }
         }
 
-      //  println("RUN TJEK")
-        viewModel.letterChosen('A')
-      //  viewModel.letterChosen('B')
-        viewModel.letterChosen('C')
-      //  viewModel.letterChosen('D')
-      //  viewModel.letterChosen('S')
-      //  viewModel.letterChosen('O')
-      //  viewModel.letterChosen('E')
-      //  viewModel.letterChosen('T')
-      //  println("SLUT TJEK")
+        Keyboard(viewModel)
 
+        //viewModel.letterChosen('A')
+        //viewModel.letterChosen('C')
     }
-
-    fun getAlphabet():MutableList<Char>{
-        val alphabet: MutableList<Char> = ArrayList()
-
-        var letter = 'A'
-        while (letter <= 'Z') {
-            alphabet.add(letter)
-            ++letter
-        }
-        return alphabet
-    }
-
-   // fun letterClicked(letter: Char){
-   //     viewModel.letterChosen(letter)
-   // }
 }

@@ -1,4 +1,4 @@
-package com.example.s205348_lykkehjulet.ui.view
+package com.example.s205348_lykkehjulet.ui.view.items
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column

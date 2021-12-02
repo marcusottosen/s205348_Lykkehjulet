@@ -2,7 +2,6 @@ package com.example.s205348_lykkehjulet
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,7 +21,7 @@ fun Navigation(){
         composable(
             route = Screen.GameScreen.route
         ){
-            gameFragment.runGameFragment()
+            gameFragment.SetupGameFragment()
             println("GAMEFRAGMENT HAS BEEN RUN")
         }
     }
