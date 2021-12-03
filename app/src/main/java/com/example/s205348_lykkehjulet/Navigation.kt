@@ -13,31 +13,27 @@ import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
 @ExperimentalFoundationApi
 @Composable
-fun Navigation(){
+fun Navigation() {
     val navController = rememberNavController()
     val viewModel = HiddenWordsViewModel()
     viewModel.prepareBoxes()
 
-    NavHost(navController = navController, startDestination = Screen.StartScreen.route){
+    NavHost(navController = navController, startDestination = Screen.StartScreen.route) {
 
-        composable(route = Screen.StartScreen.route){
+        composable(route = Screen.StartScreen.route) {
             getStartScreen(navController)
         }
 
-        composable(route = Screen.GameScreen.route){
+        composable(route = Screen.GameScreen.route) {
             GameFragment(viewModel, navController)
         }
 
-        composable(route = Screen.LoseScreen.route){
-            LoseGameFragment(navController)
+        composable(route = Screen.LoseScreen.route) {
+            LoseGameFragment(navController, viewModel.score.value)
         }
 
-        composable(route = Screen.WinScreen.route){
-            WinGameFragment(navController)
+        composable(route = Screen.WinScreen.route) {
+            WinGameFragment(navController, viewModel.score.value)
         }
-
-        /*composable(route = Screen.WinScreen.route){
-            ViewAllWords(navController)
-        }*/
     }
 }

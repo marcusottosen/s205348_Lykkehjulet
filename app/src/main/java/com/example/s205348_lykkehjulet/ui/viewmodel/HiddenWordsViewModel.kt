@@ -10,12 +10,14 @@ class HiddenWordsViewModel() {
 
 
     private val hiddenWords = HiddenWords.values()
-    var arrayOfHiddenWord: MutableList<Char> = ArrayList()
-    var wordGuessingArray: MutableList<Char> = ArrayList()
+    var arrayOfHiddenWord: MutableList<Char> = mutableListOf()
+    var wordGuessingArray: MutableList<Char> = mutableListOf()
     var wordGuessingArrayState = mutableStateOf(wordGuessingArray)
+    private val availableBoxes: MutableList<Int> = mutableListOf()
 
     var hiddenWord: String = ""
     var numOfLettersFound = 0
+    var lastDegrees = 0F
 
     var currentWheelItem: String = "GET100"
     var wheelDirection: MutableState<Boolean> = mutableStateOf(true)
@@ -25,11 +27,8 @@ class HiddenWordsViewModel() {
     var score: MutableState<Int> = mutableStateOf(0)
     var health: MutableState<Int> = mutableStateOf(5)
 
-    private val availableBoxes: MutableList<Int> = ArrayList()
-
 
     fun createAvailableBoxesArray() {
-        println("WHEELITEM: ${WheelItems.fromInt(500)}")
         for (i in 13..24)
             availableBoxes.add(i)
 
@@ -47,12 +46,8 @@ class HiddenWordsViewModel() {
                 break
             }
         }
-
-        println(hiddenWords[wordNum].toString())
-
         wordToList(hiddenWords[wordNum].phrase)
         hiddenWord = hiddenWords[wordNum].phrase
-
     }
 
     /**
@@ -60,13 +55,12 @@ class HiddenWordsViewModel() {
      */
     private fun wordToList(word: String) {
         for (letter in word) {
-            if(arrayOfHiddenWord.size == availableBoxes.size/2) {
+            if (arrayOfHiddenWord.size == availableBoxes.size / 2) {
                 arrayOfHiddenWord.add('#')
                 arrayOfHiddenWord.add('#')
             }
             arrayOfHiddenWord.add(letter)
         }
-        println("HIDDENWORDARRAY = $arrayOfHiddenWord")
     }
 
     /**
@@ -82,11 +76,11 @@ class HiddenWordsViewModel() {
         }
 
         for (letter in word) {
-            if (letter == ' ' || letter == '-'){
+            if (letter == ' ' || letter == '-') {
                 wordGuessingArray[availableBoxes[n]] = letter
                 numOfLettersFound++
                 n++
-            }  else {
+            } else {
                 wordGuessingArray[availableBoxes[n]] = '?'
                 n++
             }
@@ -94,55 +88,38 @@ class HiddenWordsViewModel() {
         return wordGuessingArray
     }
 
-
     fun prepareBoxes() {
         //resets values in order to play game again
-        //A new object should be created instead, but that bugs out.
+        //A new object should be created instead, but that bugs out the whole fragment.
         score.value = 0
         health.value = 5
         numOfLettersFound = 0
-        println("prepareBoxes")
+        wheelDirection.value = true
+        canSpin.value = true
+        canChooseLetter.value = false
 
-        /*
-        for (i in arrayOfHiddenWord){
-            arrayOfHiddenWord.removeLast()
-            println("size arrayOfHiddenWord: ${wordGuessingArray.size}")
-
-        }
-        for (i in wordGuessingArray){
-            wordGuessingArray.removeLast()
-            println("size WordGuessingArray: ${wordGuessingArray.size}")
-        }
-        for (i in availableBoxes){
-            availableBoxes.removeLast()
-            println("size WordGuessingArray: ${availableBoxes.size}")
-        }*/
-
+        arrayOfHiddenWord.clear()
+        wordGuessingArray.clear()
+        availableBoxes.clear()
 
         createAvailableBoxesArray()
         findRandomWord()
         createWordGuessingArray(hiddenWord)
     }
 
-    fun wheelSpun(){
-        println("WHEELVALUE: $currentWheelItem")
-
+    fun wheelSpun() {
         wheelDirection.value = !wheelDirection.value
         canSpin.value = !canSpin.value
         canChooseLetter.value = true
 
-        if (WheelItems.valueOf(currentWheelItem) == WheelItems.BANKRUPT){
+        if (WheelItems.valueOf(currentWheelItem) == WheelItems.BANKRUPT) {
             health.value = 0
-            println("!! bankrupt. health: ${health.value}")
-        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.EXTRATURN){
-            health.value+=1
-            println("!! extraturn. health: ${health.value}")
-        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.MISSTURN){
-            health.value-=1
-            println("!!  missturn. health: ${health.value}")
+        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.EXTRATURN) {
+            health.value += 1
+        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.MISSTURN) {
+            health.value -= 1
         } else {
             score.value = score.value + WheelItems.valueOf(currentWheelItem).value
-            println("score: ${score.value}")
         }
 
     }
@@ -155,12 +132,6 @@ class HiddenWordsViewModel() {
     fun letterChosen(letter: Char) {
         canSpin.value = true
         canChooseLetter.value = false
-
-        println("$letter letter clicked")
-
-        //println("hidden word array!== $hiddenWordArray which is ${hiddenWordArray.size} long")
-        //println("Word Guessing array!== $wordGuessingArray which is ${wordGuessingArray.size} long")
-        //println("Letters Found array!== $LettersFound which is ${LettersFound.size} long")
 
         if (arrayOfHiddenWord.contains(letter)) { //if letter is in secret word
             for (i in 1..arrayOfHiddenWord.size) { //Go through whole array of boxes

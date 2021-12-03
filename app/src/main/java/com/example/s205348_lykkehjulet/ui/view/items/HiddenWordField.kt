@@ -22,19 +22,19 @@ import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 @ExperimentalFoundationApi
 @Composable
 fun LetterBox(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
-    val boxValue by remember { mutableStateOf(viewModel.wordGuessingArrayState)}
+    val boxValue by remember { mutableStateOf(viewModel.wordGuessingArrayState) }
 
     val edges = intArrayOf(0, 12, 39, 51)
     var boxColor: Color
-    var i: Int = 0
-
-    println("boxValue======= ${boxValue.value}")
+    var i = 0
 
     Card(elevation = 10.dp) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentSize(align = Alignment.Center),
-            verticalArrangement = Arrangement.Center) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(align = Alignment.Center),
+            verticalArrangement = Arrangement.Center
+        ) {
             LazyVerticalGrid(
                 cells = GridCells.Fixed(13),
                 modifier = Modifier.padding(10.dp, 20.dp, 10.dp, 20.dp)
@@ -58,7 +58,6 @@ fun LetterBox(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                                 .background(boxColor)
                                 .align(Alignment.CenterHorizontally)
                         ) {
-
                             if (boxValue != '#' && boxValue != '?') { //If letter should be in the box, display text
                                 Text(
                                     text = "$boxValue",

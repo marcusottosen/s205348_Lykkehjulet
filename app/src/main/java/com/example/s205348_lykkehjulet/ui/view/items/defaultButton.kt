@@ -18,11 +18,10 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun DefaultButton (
+fun DefaultButton(
     text: String,
     onClick: () -> Unit,
-    //modifier: Modifier = Modifier
-){
+) {
     Button(
         modifier = Modifier.padding(vertical = 24.dp),
         onClick = {

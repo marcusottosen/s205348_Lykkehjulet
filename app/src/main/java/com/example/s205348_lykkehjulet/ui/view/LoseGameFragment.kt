@@ -18,9 +18,7 @@ import com.example.s205348_lykkehjulet.R
 import com.example.s205348_lykkehjulet.Screen
 
 @Composable
-fun LoseGameFragment(navController: NavController) {
-    println("--------PLAYER LOST--------")
-
+fun LoseGameFragment(navController: NavController, score: Int) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,6 +38,12 @@ fun LoseGameFragment(navController: NavController) {
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier.width(250.dp)
+        )
+        Text(
+            text = "You had a score of $score points",
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center
         )
 
         DefaultButton(

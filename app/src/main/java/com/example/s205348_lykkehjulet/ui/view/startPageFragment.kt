@@ -43,10 +43,5 @@ fun getStartScreen(navController: NavController) {
             onClick = {
                 navController.navigate(Screen.GameScreen.route)
             })
-        DefaultButton(
-            text = "show all words",
-            onClick = {
-                navController.navigate(Screen.GameScreen.route)
-            })
     }
 }

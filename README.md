@@ -9,3 +9,8 @@ Der bliver brugt navigation mellem fragmenterne vha. filen Navigation.kt som fun
 Der er 4 fragmenter: GameFragment, LoseGameFragment, WinGameFragment og WinGameFragment.
 
 Arkitekturen er bygget op omkring MVVM.
+
+
+
+
+Link til GitHub: https://github.com/marcusottosen/s205348_Lykkehjulet

@@ -2,7 +2,6 @@ package com.example.s205348_lykkehjulet.data.model
 
 
 public enum class HiddenWords(val phrase: String){
-
     ACADEMICSCHOLARSHIP("ACADEMIC SCHOLARSHIP"),
     STUDENTUNION("STUDENT UNION"),
     PREREQUISITECLASS("PREREQUISITE CLASS"),

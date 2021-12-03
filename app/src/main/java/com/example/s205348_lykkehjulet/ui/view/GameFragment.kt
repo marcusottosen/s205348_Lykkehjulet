@@ -34,7 +34,7 @@ fun GameFragment(
     val score by remember { mutableStateOf(viewModel.score) }
     val clicked by remember { mutableStateOf(viewModel.canSpin) }
 
-    if (score.value == 0 && viewModel.numOfLettersFound > 5) {
+    if (!viewModel.arrayOfHiddenWord.any()) {
         viewModel.prepareBoxes()
     }
 
@@ -100,9 +100,6 @@ fun GameFragment(
                 Button(
                     onClick = {
                         viewModel.wheelSpun()
-                        // viewModel.wheelDirection.value = !viewModel.wheelDirection.value
-                        // viewModel.canSpin.value = !viewModel.canSpin.value
-                        // viewModel.canChooseLetter.value = true
                     },
                     enabled = clicked.value
                 ) {
@@ -118,10 +115,12 @@ fun GameFragment(
     if (health.value <= 0) {
         health.value = 5 // to stop infinite loop
         navController.navigate(Screen.LoseScreen.route)
+        viewModel.arrayOfHiddenWord.clear()
     }
     //Winning
     if (viewModel.numOfLettersFound >= viewModel.hiddenWord.length) {
         viewModel.numOfLettersFound = 0 // to stop infinite loop
         navController.navigate(Screen.WinScreen.route)
+        viewModel.arrayOfHiddenWord.clear()
     }
 }
