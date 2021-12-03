@@ -98,6 +98,27 @@ class HiddenWordsViewModel() {
 
 
     fun prepareBoxes() {
+        //resets values in order to play game again
+        //A new object should be created instead, but that bugs out.
+        score.value = 0
+        health.value = 5
+        numOfLettersFound = 0
+        println("prepareBoxes")
+        for (i in arrayOfHiddenWord){
+            arrayOfHiddenWord.removeLast()
+            println("size arrayOfHiddenWord: ${wordGuessingArray.size}")
+
+        }
+        for (i in wordGuessingArray){
+            wordGuessingArray.removeLast()
+            println("size WordGuessingArray: ${wordGuessingArray.size}")
+        }
+        for (i in availableBoxes){
+            availableBoxes.removeLast()
+            println("size WordGuessingArray: ${availableBoxes.size}")
+        }
+
+
         createAvailableBoxesArray()
         findRandomWord()
         createWordGuessingArray(hiddenWord)

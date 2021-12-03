@@ -18,7 +18,6 @@ fun Navigation(){
     val viewModel = HiddenWordsViewModel()
     viewModel.prepareBoxes()
 
-S
     NavHost(navController = navController, startDestination = Screen.StartScreen.route){
 
         composable(route = Screen.StartScreen.route){

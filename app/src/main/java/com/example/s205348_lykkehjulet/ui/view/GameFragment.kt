@@ -20,78 +20,89 @@ import com.example.s205348_lykkehjulet.ui.view.items.Wheel
 import com.example.s205348_lykkehjulet.ui.viewmodel.HiddenWordsViewModel
 
 
-    @ExperimentalFoundationApi
-    @Composable
-    fun GameFragment(viewModel: HiddenWordsViewModel = HiddenWordsViewModel(),navController: NavController) {
-        val health by remember { mutableStateOf(viewModel.health) }
-        val score by remember { mutableStateOf(viewModel.score) }
-        val clicked by remember { mutableStateOf(viewModel.canSpin) }
+@ExperimentalFoundationApi
+@Composable
+fun GameFragment(
+    viewModel: HiddenWordsViewModel = HiddenWordsViewModel(),
+    navController: NavController
+) {
+    val health by remember { mutableStateOf(viewModel.health) }
+    val score by remember { mutableStateOf(viewModel.score) }
+    val clicked by remember { mutableStateOf(viewModel.canSpin) }
+
+    if (score.value == 0 && viewModel.numOfLettersFound > 5) {
+        viewModel.prepareBoxes()
+    }
 
 
-        Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()) {
 
-            LetterBox(viewModel)
+        LetterBox(viewModel)
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = health.value.toString(),
-                    modifier = Modifier.padding(20.dp, 10.dp, 0.dp, 0.dp),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Category: University Life",
-                    modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = score.value.toString(),
-                    modifier = Modifier.padding(0.dp, 10.dp, 20.dp, 0.dp),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = health.value.toString(),
+                modifier = Modifier.padding(20.dp, 10.dp, 0.dp, 0.dp),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Category: University Life",
+                modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = score.value.toString(),
+                modifier = Modifier.padding(0.dp, 10.dp, 20.dp, 0.dp),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
-            //Spinning wheel & its button
-            Column(
+        //Spinning wheel & its button
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(align = Alignment.Center),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Wheel(viewModel)
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(align = Alignment.Center),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Wheel(viewModel)
-                Box(modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 10.dp)
-                    .background(color = Color.Green)) {
-                    Button(
-                        onClick = {
-                            viewModel.wheelDirection.value = !viewModel.wheelDirection.value
-                            viewModel.canSpin.value = !viewModel.canSpin.value
-                            viewModel.canChooseLetter.value = true
-                        },
-                        enabled = clicked.value
-                    ) {
-                        Text(text = "Spin the wheel!")
-                    }
+                    .background(color = Color.Green)
+            ) {
+                Button(
+                    onClick = {
+                        viewModel.wheelDirection.value = !viewModel.wheelDirection.value
+                        viewModel.canSpin.value = !viewModel.canSpin.value
+                        viewModel.canChooseLetter.value = true
+                    },
+                    enabled = clicked.value
+                ) {
+                    Text(text = "Spin the wheel!")
                 }
             }
         }
-        Keyboard(viewModel)
-
-        if (health.value == 4 ){
-            health.value = 5 // to stop infinite loop
-            navController.navigate(Screen.LoseScreen.route)
-        }
-        println("number of letters found: ${viewModel.numOfLettersFound} and lenght of hidden word: ${viewModel.hiddenWord.length}")
-
-        if (viewModel.numOfLettersFound >= viewModel.hiddenWord.length){
-            viewModel.numOfLettersFound = 0 // to stop infinite loop
-            navController.navigate(Screen.WinScreen.route)
-        }
     }
+    Keyboard(viewModel)
+
+
+
+    if (health.value == 4) {
+        health.value = 5 // to stop infinite loop
+        navController.navigate(Screen.LoseScreen.route)
+    }
+    println("number of letters found: ${viewModel.numOfLettersFound} and lenght of hidden word: ${viewModel.hiddenWord.length}")
+
+    if (viewModel.numOfLettersFound >= viewModel.hiddenWord.length) {
+        viewModel.numOfLettersFound = 0 // to stop infinite loop
+        navController.navigate(Screen.WinScreen.route)
+    }
+}
 
