@@ -1,5 +1,5 @@
 # s205348_Lykkehjulet
-Made by Marcus Kastrup Ottosen for course 62550 User Experience and Mobile Application Devopment
+Made by Marcus Kastrup Ottosen for course 62550 User Experience and Mobile Application Development
 
 **Læs venligst:**
 
