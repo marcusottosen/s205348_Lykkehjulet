@@ -88,16 +88,18 @@ class HiddenWordsViewModel() {
         return wordGuessingArray
     }
 
+    /**
+     * Resets values in order to play game again
+     * A new object should be created instead, but that bugs out the whole fragment.
+     * Prepares for a new game
+     */
     fun prepareBoxes() {
-        //resets values in order to play game again
-        //A new object should be created instead, but that bugs out the whole fragment.
         score.value = 0
         health.value = 5
         numOfLettersFound = 0
         wheelDirection.value = true
         canSpin.value = true
         canChooseLetter.value = false
-
         arrayOfHiddenWord.clear()
         wordGuessingArray.clear()
         availableBoxes.clear()

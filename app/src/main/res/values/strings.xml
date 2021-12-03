@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">s205348_Lykkehjulet</string>
+    <string name="winGame">Congratulations you guessed the word! \n Who knew you had a curriculum eh?</string>
+    <string name="loseGame">Oh no! You lost.. \n Better luck next time eh?!</string>
+    <string name="playAgain">Play Again</string>
 </resources>

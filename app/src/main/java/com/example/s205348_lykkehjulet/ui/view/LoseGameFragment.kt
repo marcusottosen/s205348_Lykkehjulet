@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,7 +28,7 @@ fun LoseGameFragment(navController: NavController, score: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Oh no! You lost.. \n Better luck next time eh?!",
+            text = stringResource(id = R.string.loseGame),
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
             textAlign = TextAlign.Center
@@ -47,7 +48,7 @@ fun LoseGameFragment(navController: NavController, score: Int) {
         )
 
         DefaultButton(
-            text = "Play again",
+            text = stringResource(id = R.string.playAgain),
             onClick = {
                 navController.navigate(Screen.StartScreen.route)
             })

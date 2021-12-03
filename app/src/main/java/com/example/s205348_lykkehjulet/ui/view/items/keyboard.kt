@@ -34,7 +34,6 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                 .wrapContentSize(align = Alignment.BottomCenter),
             Alignment.BottomCenter
         ) {
-
             LazyVerticalGrid(
                 cells = GridCells.Fixed(7),
                 modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 0.dp),
@@ -42,19 +41,16 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                 items(getAlphabet().toList()) { //For all items in array
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         var buttonUsed by remember { mutableStateOf(true) }
-                        val canChooseLetter by remember { mutableStateOf(viewModel.canChooseLetter)}
+                        val canChooseLetter by remember { mutableStateOf(viewModel.canChooseLetter) }
 
                         Button(
                             onClick = {
-                                //viewModel.canSpin = true
                                 viewModel.letterChosen(it)
-                                //viewModel.canChooseLetter=!viewModel.canChooseLetter
-                                //viewModel.canChooseLetter.value = !viewModel.canChooseLetter.value
-                                println("canChooseLetter status== ${viewModel.canChooseLetter.value}")
-                                buttonUsed=!buttonUsed
-                                      },
+                                buttonUsed = !buttonUsed
+                            },
                             enabled = if (!canChooseLetter.value) canChooseLetter.value else buttonUsed,
-                            modifier = Modifier.height(35.dp)
+                            modifier = Modifier
+                                .height(35.dp)
                                 .padding(1.dp)
                                 .background(colorResource(R.color.noLetter))
                                 .align(Alignment.CenterHorizontally)
@@ -65,8 +61,7 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .fillMaxHeight()
-                                    ,//.padding(top = 10.dp),
+                                    .fillMaxHeight(),
                                 textAlign = TextAlign.Center
                             )
                         }
@@ -77,8 +72,7 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
     }
 }
 
-
-fun getAlphabet():MutableList<Char>{
+fun getAlphabet(): MutableList<Char> {
     val alphabet: MutableList<Char> = ArrayList()
 
     var letter = 'A'
