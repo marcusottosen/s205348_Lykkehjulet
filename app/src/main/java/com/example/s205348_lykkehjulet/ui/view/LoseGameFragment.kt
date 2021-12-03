@@ -19,6 +19,8 @@ import com.example.s205348_lykkehjulet.Screen
 
 @Composable
 fun LoseGameFragment(navController: NavController) {
+    println("--------PLAYER LOST--------")
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -27,7 +29,7 @@ fun LoseGameFragment(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "You gussed wrong too many times.. \n Better luck next time eh?!",
+            text = "Oh no! You lost.. \n Better luck next time eh?!",
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
             textAlign = TextAlign.Center

@@ -19,6 +19,7 @@ import com.example.s205348_lykkehjulet.Screen
 
 @Composable
 fun WinGameFragment(navController: NavController) {
+    println("--------PLAYER WON--------")
     Column(
         modifier = Modifier
             .fillMaxWidth()

@@ -11,19 +11,17 @@ class HiddenWordsViewModel() {
 
     private val hiddenWords = HiddenWords.values()
     var arrayOfHiddenWord: MutableList<Char> = ArrayList()
-
-    var currentWheelItem: String = "GET100"
-
     var wordGuessingArray: MutableList<Char> = ArrayList()
     var wordGuessingArrayState = mutableStateOf(wordGuessingArray)
 
     var hiddenWord: String = ""
     var numOfLettersFound = 0
 
+    var currentWheelItem: String = "GET100"
     var wheelDirection: MutableState<Boolean> = mutableStateOf(true)
     var canSpin: MutableState<Boolean> = mutableStateOf(true)
-
     var canChooseLetter: MutableState<Boolean> = mutableStateOf(false)
+
     var score: MutableState<Int> = mutableStateOf(0)
     var health: MutableState<Int> = mutableStateOf(5)
 
@@ -47,7 +45,7 @@ class HiddenWordsViewModel() {
             if (hiddenWords[wordNum].toString().length <= availableBoxes.size - 1
             ) {
                 break
-            } //TODO Else change to startPage?
+            }
         }
 
         println(hiddenWords[wordNum].toString())
@@ -84,11 +82,11 @@ class HiddenWordsViewModel() {
         }
 
         for (letter in word) {
-            if (letter == ' '){
-                wordGuessingArray[availableBoxes[n]] = ' '
+            if (letter == ' ' || letter == '-'){
+                wordGuessingArray[availableBoxes[n]] = letter
                 numOfLettersFound++
                 n++
-            } else {
+            }  else {
                 wordGuessingArray[availableBoxes[n]] = '?'
                 n++
             }
@@ -104,6 +102,8 @@ class HiddenWordsViewModel() {
         health.value = 5
         numOfLettersFound = 0
         println("prepareBoxes")
+
+        /*
         for (i in arrayOfHiddenWord){
             arrayOfHiddenWord.removeLast()
             println("size arrayOfHiddenWord: ${wordGuessingArray.size}")
@@ -116,7 +116,7 @@ class HiddenWordsViewModel() {
         for (i in availableBoxes){
             availableBoxes.removeLast()
             println("size WordGuessingArray: ${availableBoxes.size}")
-        }
+        }*/
 
 
         createAvailableBoxesArray()
@@ -124,12 +124,34 @@ class HiddenWordsViewModel() {
         createWordGuessingArray(hiddenWord)
     }
 
+    fun wheelSpun(){
+        println("WHEELVALUE: $currentWheelItem")
+
+        wheelDirection.value = !wheelDirection.value
+        canSpin.value = !canSpin.value
+        canChooseLetter.value = true
+
+        if (WheelItems.valueOf(currentWheelItem) == WheelItems.BANKRUPT){
+            health.value = 0
+            println("!! bankrupt. health: ${health.value}")
+        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.EXTRATURN){
+            health.value+=1
+            println("!! extraturn. health: ${health.value}")
+        } else if (WheelItems.valueOf(currentWheelItem) == WheelItems.MISSTURN){
+            health.value-=1
+            println("!!  missturn. health: ${health.value}")
+        } else {
+            score.value = score.value + WheelItems.valueOf(currentWheelItem).value
+            println("score: ${score.value}")
+        }
+
+    }
+
     /**
      * Checks if the chosen letter is in the hidden word and adds it to wordGuessingArray which holds data for all 52 boxes
      * Function makes sure the letters are inserted into the correct boxes
      * letterIndex = list of which index/indexes the current letter is in the current word
      */
-
     fun letterChosen(letter: Char) {
         canSpin.value = true
         canChooseLetter.value = false

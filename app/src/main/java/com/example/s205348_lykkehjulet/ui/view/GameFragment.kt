@@ -1,6 +1,7 @@
 package com.example.s205348_lykkehjulet.ui.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -9,10 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.s205348_lykkehjulet.R
 import com.example.s205348_lykkehjulet.Screen
 import com.example.s205348_lykkehjulet.ui.view.items.Keyboard
 import com.example.s205348_lykkehjulet.ui.view.items.LetterBox
@@ -43,24 +47,40 @@ fun GameFragment(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = health.value.toString(),
-                modifier = Modifier.padding(20.dp, 10.dp, 0.dp, 0.dp),
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(modifier = Modifier.padding(start = 10.dp)) {
+                Image(
+                    painter = painterResource(id = R.drawable.icon_health),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.width(16.dp).padding(0.dp,10.dp,0.dp,0.dp)
+                )
+                Text(
+                    text = health.value.toString(),
+                    modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
             Text(
                 text = "Category: University Life",
-                modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp),
+                modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 10.dp),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                text = score.value.toString(),
-                modifier = Modifier.padding(0.dp, 10.dp, 20.dp, 0.dp),
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Row(modifier = Modifier.padding(end = 10.dp)) {
+                Text(
+                    text = score.value.toString(),
+                    modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.icon_score),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.width(16.dp).padding(0.dp, 10.dp, 0.dp, 0.dp)
+                )
+            }
         }
 
         //Spinning wheel & its button
@@ -79,9 +99,10 @@ fun GameFragment(
             ) {
                 Button(
                     onClick = {
-                        viewModel.wheelDirection.value = !viewModel.wheelDirection.value
-                        viewModel.canSpin.value = !viewModel.canSpin.value
-                        viewModel.canChooseLetter.value = true
+                        viewModel.wheelSpun()
+                        // viewModel.wheelDirection.value = !viewModel.wheelDirection.value
+                        // viewModel.canSpin.value = !viewModel.canSpin.value
+                        // viewModel.canChooseLetter.value = true
                     },
                     enabled = clicked.value
                 ) {
@@ -94,7 +115,7 @@ fun GameFragment(
 
 
 
-    if (health.value == 4) {
+    if (health.value <= 0) {
         health.value = 5 // to stop infinite loop
         navController.navigate(Screen.LoseScreen.route)
     }
