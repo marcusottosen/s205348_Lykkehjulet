@@ -1,23 +1,24 @@
-package com.example.s205348_lykkehjulet.ui.view
+package com.example.s205348_lykkehjulet.ui.view.items
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.s205348_lykkehjulet.Screen
 import com.example.s205348_lykkehjulet.R
-import com.example.s205348_lykkehjulet.ui.view.items.DefaultButton
+import com.example.s205348_lykkehjulet.Screen
 
 @Composable
-fun getStartScreen(navController: NavController) {
+fun WinGameFragment(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -26,22 +27,23 @@ fun getStartScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Welcome to the Wheel of Fortune!",
+            text = "Congratulations you guessed the word! \n Who knew you had a curriculum eh?",
             fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp
+            fontSize = 18.sp,
+            textAlign = TextAlign.Center
         )
 
         Image(
-            painter = painterResource(id = R.drawable.img_startpagewheel),
+            painter = painterResource(id = R.drawable.img_win),
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier.width(250.dp)
         )
 
         DefaultButton(
-            text = "Start Game",
+            text = "Play again",
             onClick = {
-                navController.navigate(Screen.GameScreen.route)
+                navController.navigate(Screen.StartScreen.route)
             })
     }
 }

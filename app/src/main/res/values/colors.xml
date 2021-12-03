@@ -3,7 +3,7 @@
     <color name="cornersAndBg">#FFFFFF</color>
     <color name="noLetter">#FF3498DB</color>
     <color name="notFound">#FFcccccc</color>
-    <color name="found">#FF03DAC5</color>
+    <color name="found">#FFf5f5f5</color>
 
 
     <color name="purple_200">#FFBB86FC</color>

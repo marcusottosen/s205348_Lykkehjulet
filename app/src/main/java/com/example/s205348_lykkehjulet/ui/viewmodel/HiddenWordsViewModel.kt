@@ -1,23 +1,24 @@
 package com.example.s205348_lykkehjulet.ui.viewmodel
 
 import androidx.compose.runtime.*
+import androidx.navigation.NavController
 import com.example.s205348_lykkehjulet.data.model.HiddenWords
+import com.example.s205348_lykkehjulet.data.model.WheelItems
 
 
-class HiddenWordsViewModel {
+class HiddenWordsViewModel() {
 
 
-    private val usedWords: MutableList<Int> = ArrayList()
     private val hiddenWords = HiddenWords.values()
     var arrayOfHiddenWord: MutableList<Char> = ArrayList()
 
+    var currentWheelItem: String = "GET100"
 
     var wordGuessingArray: MutableList<Char> = ArrayList()
-
     var wordGuessingArrayState = mutableStateOf(wordGuessingArray)
 
-    //var wordGuessingArray by mutableStateOf(CharArray)
     var hiddenWord: String = ""
+    var numOfLettersFound = 0
 
     var wheelDirection: MutableState<Boolean> = mutableStateOf(true)
     var canSpin: MutableState<Boolean> = mutableStateOf(true)
@@ -30,6 +31,7 @@ class HiddenWordsViewModel {
 
 
     fun createAvailableBoxesArray() {
+        println("WHEELITEM: ${WheelItems.fromInt(500)}")
         for (i in 13..24)
             availableBoxes.add(i)
 
@@ -38,27 +40,21 @@ class HiddenWordsViewModel {
     }
 
     private fun findRandomWord() {
-        if (!usedWords.size.equals(hiddenWords.size)) {
-            var wordNum: Int = 0 //(0..hiddenWords.size-1).random()
+        var wordNum = 0
 
-            for (i in 0..hiddenWords.size) {
-                wordNum = (0..hiddenWords.size - 1).random()
-                if (!usedWords.contains(wordNum)
-                    && hiddenWords[wordNum].toString().length <= availableBoxes.size - 1
-                ) {
-                    break
-                }
-            }
-
-            usedWords.add(wordNum)
-            println(hiddenWords[wordNum].toString())
-
-            wordToList(hiddenWords[wordNum].phrase)
-            hiddenWord = hiddenWords[wordNum].phrase
-        } else {
-            println("AHHHH NULL \\ All available words has been found!")
-
+        for (i in 0..hiddenWords.size) {
+            wordNum = (0..hiddenWords.size - 1).random()
+            if (hiddenWords[wordNum].toString().length <= availableBoxes.size - 1
+            ) {
+                break
+            } //TODO Else change to startPage?
         }
+
+        println(hiddenWords[wordNum].toString())
+
+        wordToList(hiddenWords[wordNum].phrase)
+        hiddenWord = hiddenWords[wordNum].phrase
+
     }
 
     /**
@@ -66,6 +62,10 @@ class HiddenWordsViewModel {
      */
     private fun wordToList(word: String) {
         for (letter in word) {
+            if(arrayOfHiddenWord.size == availableBoxes.size/2) {
+                arrayOfHiddenWord.add('#')
+                arrayOfHiddenWord.add('#')
+            }
             arrayOfHiddenWord.add(letter)
         }
         println("HIDDENWORDARRAY = $arrayOfHiddenWord")
@@ -84,11 +84,16 @@ class HiddenWordsViewModel {
         }
 
         for (letter in word) {
-            wordGuessingArray[availableBoxes[n]] = '?'
-            n++
+            if (letter == ' '){
+                wordGuessingArray[availableBoxes[n]] = ' '
+                numOfLettersFound++
+                n++
+            } else {
+                wordGuessingArray[availableBoxes[n]] = '?'
+                n++
+            }
         }
         return wordGuessingArray
-
     }
 
 
@@ -109,23 +114,18 @@ class HiddenWordsViewModel {
         canChooseLetter.value = false
 
         println("$letter letter clicked")
-        //LettersUsed.add(letter)
-        //LettersFound.add(letter)
+
         //println("hidden word array!== $hiddenWordArray which is ${hiddenWordArray.size} long")
         //println("Word Guessing array!== $wordGuessingArray which is ${wordGuessingArray.size} long")
         //println("Letters Found array!== $LettersFound which is ${LettersFound.size} long")
 
         if (arrayOfHiddenWord.contains(letter)) { //if letter is in secret word
-            //val letterIndex: MutableList<Int> = ArrayList() //letterIndex.add(i)
-            for (i in 1..arrayOfHiddenWord.size) { //Goes through whole array of boxes
+            for (i in 1..arrayOfHiddenWord.size) { //Go through whole array of boxes
                 if (arrayOfHiddenWord[i - 1] != '\u0000' && arrayOfHiddenWord[i - 1] == letter) {
-                    score.value = score.value + 100
+                    score.value = score.value + WheelItems.valueOf(currentWheelItem).value
                     val index = availableBoxes.first() + i
-                    if (index > 24) {
-                        wordGuessingArray[index + 2] = letter
-                    } else {
-                        wordGuessingArray[index] = letter
-                    }
+                    wordGuessingArray[index] = letter
+                    numOfLettersFound++
                 }
             }
         } else {

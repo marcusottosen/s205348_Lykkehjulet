@@ -37,7 +37,7 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
 
             LazyVerticalGrid(
                 cells = GridCells.Fixed(7),
-                modifier = Modifier.padding(10.dp, 20.dp, 10.dp, 20.dp),
+                modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 0.dp),
             ) {
                 items(getAlphabet().toList()) { //For all items in array
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -54,7 +54,7 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                                 buttonUsed=!buttonUsed
                                       },
                             enabled = if (!canChooseLetter.value) canChooseLetter.value else buttonUsed,
-                            modifier = Modifier.height(50.dp)
+                            modifier = Modifier.height(35.dp)
                                 .padding(1.dp)
                                 .background(colorResource(R.color.noLetter))
                                 .align(Alignment.CenterHorizontally)
@@ -66,7 +66,7 @@ fun Keyboard(viewModel: HiddenWordsViewModel = HiddenWordsViewModel()) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .fillMaxHeight()
-                                    .padding(top = 10.dp),
+                                    ,//.padding(top = 10.dp),
                                 textAlign = TextAlign.Center
                             )
                         }
