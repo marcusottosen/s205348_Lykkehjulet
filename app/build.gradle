@@ -64,4 +64,21 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.1.0-beta03"
     debugImplementation "androidx.compose.ui:ui-tooling:1.1.0-beta03"
+
+    implementation 'com.google.android:flexbox:1.0.0'
+
+    // Java language implementation
+    implementation("androidx.navigation:navigation-fragment:2.4.0-beta02")
+    implementation("androidx.navigation:navigation-ui:2.4.0-beta02")
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0-beta02")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0-beta02")
+
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.0-beta02")
+    // card view
+    implementation "androidx.cardview:cardview:1.0.0"
+    // recycler view
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 }

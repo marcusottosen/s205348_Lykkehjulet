@@ -114,16 +114,14 @@ fun GameFragment(
     Keyboard(viewModel)
 
 
-
+    //Losing
     if (health.value <= 0) {
         health.value = 5 // to stop infinite loop
         navController.navigate(Screen.LoseScreen.route)
     }
-    println("number of letters found: ${viewModel.numOfLettersFound} and lenght of hidden word: ${viewModel.hiddenWord.length}")
-
+    //Winning
     if (viewModel.numOfLettersFound >= viewModel.hiddenWord.length) {
         viewModel.numOfLettersFound = 0 // to stop infinite loop
         navController.navigate(Screen.WinScreen.route)
     }
 }
-

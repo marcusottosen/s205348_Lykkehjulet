@@ -35,5 +35,9 @@ fun Navigation(){
         composable(route = Screen.WinScreen.route){
             WinGameFragment(navController)
         }
+
+        /*composable(route = Screen.WinScreen.route){
+            ViewAllWords(navController)
+        }*/
     }
 }
